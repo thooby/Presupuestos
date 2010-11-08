@@ -10,7 +10,29 @@ module AsientosHelper
     end    
     [items,cabe]
   end
-  
+  def busca_item_calc(cap_code)
+    cabe = []
+    items = Asiento.where("cap_code == ?", cap_code)
+    items.each do |item|
+       cabe << item.desc[5..-1] if item.desc[0..4]=="TOTAL"
+    end    
+    [items,cabe]
+  end
+  def busca_item(asiento_or)
+    items = busca_item_calc(asiento_or.cap_code)
+    salida = %&<table> <h2> #{asiento_or.cap_code} <br />
+              Descripcion:  #{asiento_or.desc} </h2>
+              <h3> #{items[1][0]} </h3>&
+    items[0].each do |item|                  
+      salida += %&<tr><td><br/>
+                #{item.dep.desc}</td>
+                <td>#{abrev(item.mini.desc)} <br /></td>
+                 <td>#{item.prog.desc}</td>
+                 <td>#{item.desc}</td>
+                 <td>#{item.cantidad}</td></tr>&
+    end
+    salida += "</table>" 
+  end
   def busca_sub(asiento_or) 
     items = busca_sub_calc(asiento_or.mini_id, asiento_or.prog_id, asiento_or.cap_code) 
     salida = %&<table> <h2> #{@asiento.mini.desc} <br />
@@ -41,14 +63,14 @@ module AsientosHelper
         end 
         salida += "</td>"
       else 
-        salida += %&<td class = "rojo"> item.desc </td>&
+        salida += %&<td class = "rojo"> #{item.desc} </td>&
         if item.cap_code <1000 then 
   	      salida += "<td></td>"
   	    end 	
         if item.cap_code <100 then 
   	      salida += "<td></td>"
   	    end 
-        salida += %&<td class = "rojo"> item.cantidad </td>&
+        salida += %&<td class = "rojo"> #{item.cantidad} </td>&
       end 
       salida += "</tr>"
     end
