@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Codigo:</b>
+  <%= @prog.codigo %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @prog.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_prog_path(@prog) %> |
+<%= link_to 'Back', progs_path %>

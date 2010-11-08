@@ -1,0 +1,40 @@
+<h1>Listing asientos</h1>
+
+<table>
+  <tr>
+    <th>Dep</th>
+    <th>Cap code</th>
+    <th>Desc</th>
+    <th>Cantidad</th>
+    <th>Mini</th>
+    <th>Prog</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @asientos.each do |asiento| %>
+  <tr>
+	<% if not asiento.dep.nil? %>
+    <td><%= asiento.dep.desc %></td>
+    <% end %>
+    <td><%= asiento.cap_code %></td>
+    <td><%= asiento.desc %></td>
+    <td><%= asiento.cantidad %></td>
+	<% if not asiento.mini.nil? %>
+    <td><%= asiento.mini_id %></td>
+    <% end %>
+	<% if not asiento.prog.nil? %>
+    <td><%= asiento.prog_id %></td>
+    <% end %>
+    <td><%= link_to 'Show', asiento %></td>
+    <td><%= link_to 'Edit', edit_asiento_path(asiento) %></td>
+    <td><%= link_to 'Destroy', asiento, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= will_paginate @asientos %>
+
+<%= link_to 'New Asiento', new_asiento_path %>

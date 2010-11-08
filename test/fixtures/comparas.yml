@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  asiento_id: 1
+  orden: 1
+
+two:
+  asiento_id: 1
+  orden: 1

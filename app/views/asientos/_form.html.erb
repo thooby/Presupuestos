@@ -1,0 +1,41 @@
+<%= form_for(@asiento) do |f| %>
+  <% if @asiento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@asiento.errors.count, "error") %> prohibited this asiento from being saved:</h2>
+
+      <ul>
+      <% @asiento.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :dep_id %><br />
+    <%= f.text_field :dep_id %>
+  </div>
+  <div class="field">
+    <%= f.label :cap_code %><br />
+    <%= f.text_field :cap_code %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="field">
+    <%= f.label :cantidad %><br />
+    <%= f.text_field :cantidad %>
+  </div>
+  <div class="field">
+    <%= f.label :mini_id %><br />
+    <%= f.text_field :mini_id %>
+  </div>
+  <div class="field">
+    <%= f.label :prog_id %><br />
+    <%= f.text_field :prog_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

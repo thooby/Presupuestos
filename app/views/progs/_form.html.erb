@@ -1,0 +1,25 @@
+<%= form_for(@prog) do |f| %>
+  <% if @prog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@prog.errors.count, "error") %> prohibited this prog from being saved:</h2>
+
+      <ul>
+      <% @prog.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :codigo %><br />
+    <%= f.text_field :codigo %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

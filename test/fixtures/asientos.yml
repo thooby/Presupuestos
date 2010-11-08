@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  dep_id: 1
+  cap_code: 1
+  desc: MyString
+  cantidad: 1.5
+  mini_id: 1
+  prog_id: 1
+
+two:
+  dep_id: 1
+  cap_code: 1
+  desc: MyString
+  cantidad: 1.5
+  mini_id: 1
+  prog_id: 1

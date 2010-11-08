@@ -1,0 +1,25 @@
+<h1>Listing progs</h1>
+
+<table>
+  <tr>
+    <th>Codigo</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @progs.each do |prog| %>
+  <tr>
+    <td><%= prog.codigo %></td>
+    <td><%= prog.desc %></td>
+    <td><%= link_to 'Show', prog %></td>
+    <td><%= link_to 'Edit', edit_prog_path(prog) %></td>
+    <td><%= link_to 'Destroy', prog, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Prog', new_prog_path %>

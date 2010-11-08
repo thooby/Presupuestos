@@ -1,0 +1,86 @@
+<p id="notice"><%= notice %></p>
+  <b>Dep:</b>
+  <%= @asiento.dep.desc %>
+<br />
+  <b>Cap code:</b>
+  <%= @asiento.cap_code %>
+<br />
+  <b>Desc:</b>
+  <%= @asiento.desc %>
+<br />
+  <b>Cantidad:</b>
+  <%= @asiento.cantidad %>
+<br />
+  <b>Mini:</b>
+  <%= @asiento.mini.desc %>
+<br />
+  <b>Prog:</b>
+  <%= @asiento.prog.desc %>
+<br />
+<%= link_to 'Edit', edit_asiento_path(@asiento) %> |
+<%= link_to 'Back', asientos_path %>
+<h2>Cantidades similares</h2>
+<% comp = similar_cantidad(@asiento.id) %>
+
+<% comp.each do |c|  %>
+<% if c.asiento.id == @asiento.id then %> 
+<div class="rojo">
+Cap: <%= c.asiento.cap_code.to_s[0,1] %> 
+Prog: <%= c.asiento.prog.desc %> 
+<strong><%= abrev(c.asiento.mini.desc) %></strong> 
+<%= c.asiento.dep.desc %> 
+<i><%= c.asiento.desc %></i> = 
+  <%= c.asiento.cantidad %><br />
+</div>
+<% else %> 
+Cap: <%= c.asiento.cap_code.to_s[0,1] %> 
+Prog: <%= c.asiento.prog.desc %> 
+<strong><%= abrev(c.asiento.mini.desc) %></strong> 
+<%= c.asiento.dep.desc %> 
+<i><%= c.asiento.desc %></i> = 
+  <%= c.asiento.cantidad %><br />
+<% end %> 
+<% end %>
+<% items = busca_sub(@asiento.mini_id, @asiento.prog_id, @asiento.cap_code) %>
+
+<table>
+<h2><%= @asiento.mini.desc %><br />Programa: <%= @asiento.prog.desc %></h2>
+<h3>
+	<%= items[1][0]%>
+	</h3>
+<% @dep_desc_old = "" %>
+<% items[0].each do |item| %>
+  <tr>
+  <% if @dep_desc_old != item.dep.desc then %>
+	<td><br/><strong><%= item.dep.desc %></strong></td></tr><tr>
+	<% @dep_desc_old = item.dep.desc %>
+  <% end %>
+  <% if @asiento.cap_code != item.cap_code %>
+    <td><%= item.desc %></td>
+    <% if item.cap_code <1000 then %>
+	  <td></td>
+	<% end %>
+    <% if item.cap_code <100 then %>
+	  <td></td>
+	<% end %>
+    <td>
+	    <% if item.cap_code <10 then %>
+	<strong>
+<%= item.cantidad %>
+</strong>
+  <% else %>
+<%= item.cantidad %>
+<% end %>
+</td>
+  <% else %>
+    <td class = "rojo"><%= item.desc %></td>
+    <% if item.cap_code <1000 then %>
+	  <td></td>
+	<% end %>	
+    <% if item.cap_code <100 then %>
+	  <td></td>
+	<% end %>
+    <td class = "rojo"><%= item.cantidad %></td>
+  <% end %>
+  </tr>
+<% end %>
