@@ -29,7 +29,8 @@ module AsientosHelper
                 <td>#{abrev(item.mini.desc)} <br /></td>
                  <td>#{item.prog.desc}</td>
                  <td>#{item.desc}</td>
-                 <td>#{item.cantidad}</td></tr>&
+                 <td>#{item.cantidad}</td>
+                 <td><a href="/asientos/#{item.id}">Mostrar</a></td></tr>&
     end
     salida += "</table>" 
   end
@@ -48,6 +49,8 @@ module AsientosHelper
   	    @dep_desc_old = item.dep.desc 
       end 
       if @asiento.cap_code != item.cap_code then
+        salida += %&<td><a href="/asientos/#{item.id}">Mostrar</a></td>&
+
         salida += %&<td> #{item.desc} </td>&
         if item.cap_code <1000 then 
   	      salida += "<td></td>"
@@ -62,7 +65,8 @@ module AsientosHelper
           salida += item.cantidad.to_s 
         end 
         salida += "</td>"
-      else 
+      else
+        salida += %&<td  class = "rojo"><a href = "/asientos/#{item.id}">Mostrar</a></td>&
         salida += %&<td class = "rojo"> #{item.desc} </td>&
         if item.cap_code <1000 then 
   	      salida += "<td></td>"
@@ -72,6 +76,7 @@ module AsientosHelper
   	    end 
         salida += %&<td class = "rojo"> #{item.cantidad} </td>&
       end 
+     
       salida += "</tr>"
     end
     salida
@@ -96,7 +101,8 @@ module AsientosHelper
       salida +="<strong>" + abrev(c.asiento.mini.desc) + "</strong> " 
       salida += c.asiento.dep.desc  + " "  
       salida += "<i>" + c.asiento.desc + "</i> = " 
-      salida += c.asiento.cantidad.to_s + "<br />" + "</div> " 
+      salida += c.asiento.cantidad.to_s 
+      salida += " <a href='/asientos/#{c.asiento.id}'>Mostrar</a>" + "<br />"
       if c.asiento.id == asiento_or.id then  
         salida += "</div>"
       end
@@ -112,5 +118,37 @@ module AsientosHelper
       ab += palab[0,1] if  not  comunes.index(palab)
     end
     ab
-  end   
+  end 
+  def distancia1(asiento_or)
+    items = Asiento.all
+    items.each do |item|
+      dist = Array.new(10)
+      if asiento_or.code_cap[0] == item.code_cap[0] then
+        if asiento_or.code_cap.to_s.size == item.code_cap.to_s.size then
+          if asiento_org.prog_id.to_s == item.code.prog_id.to_s
+            puntos = 1
+          end
+          if asiento_or.code_cap[1] == item.code_cap[1] then 
+            puntos += 2
+          end
+          if (asiento_or.cantidad.to_f != 0) and 
+            (abs(asiento_or.cantidad - item.cantidad)/(asiento_or.cantidad < 0.01)) then
+            puntos += 4
+          end
+          newdist=[]
+          if puntos > 0 and dist[-1][1] < puntos
+            dist.each do |d|
+              if d[1] < puntos
+                newdist << [item, puntos]
+                puntos = d[1]
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+        
+     
+     
 end
